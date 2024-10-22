@@ -174,13 +174,42 @@ elif page == "News":
 # Page for managing the to-do list
 elif page == "To-Do List":
     st.header("📝 To-Do List Manager")
-    st.write("Add, view, or remove tasks from your to-do list.")
     
-    action = st.selectbox("🛠️ Action", ["Add Task", "View Tasks", "Remove Task"])
-    task = st.text_input("✏️ Task description:")
-    if st.button("Submit"):
-        response = manage_todo_list(action.lower(), task)
-        st.text_area("📋 Response", value=response, height=200)
+    # Input box for task
+    task_input = st.text_input("Enter a task:")
+
+    # Buttons for operations
+    if st.button("Add Task"):
+        if task_input:
+            result = add_task(task_input)
+            st.success(result)
+        else:
+            st.error("Please enter a task.")
+
+    if st.button("View Tasks"):
+        tasks = view_tasks()
+        st.write(tasks)
+
+    if st.button("Remove Task"):
+        if task_input:
+            result = remove_task(task_input)
+            st.success(result)
+        else:
+            st.error("Please enter a task to remove.")
+    
+    # Update Task Functionality
+    new_task_input = st.text_input("Enter the new task for update:")
+    if st.button("Update Task"):
+        if task_input and new_task_input:
+            result = update_task(task_input, new_task_input)
+            st.success(result)
+        else:
+            st.error("Please enter both the old and new tasks.")
+    
+    # Display the current to-do list
+    if st.button("Show Current List"):
+        tasks = view_tasks()
+        st.write(tasks)
 
 # Page for recommendations (movies, restaurants)
 elif page == "Recommendations":
