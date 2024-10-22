@@ -114,11 +114,11 @@ page = st.sidebar.selectbox(
      "Recommendations", "Email", "Meetings", "Holidays", "Escalation", "Financial Planning"]
 )
 
-st.title("🤖 Customer Service Chatbot")
+st.title("🤖 Customer Service Chatbot - Marr Labs")
 
 # Home page with general instructions
 if page == "Home":
-    st.write("👋 Welcome to the Customer Service Chatbot! - Marr Labs")
+    st.write("👋 Welcome to the Customer Service Chatbot!")
     st.write("Use the navigation bar on the left to access different features.")
     st.write("This bot can assist with retrieving information, managing tasks, scheduling meetings, and more.")
 
