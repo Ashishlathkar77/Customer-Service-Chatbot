@@ -76,6 +76,15 @@ This integration improves user experience and opens up opportunities for advance
   - **SMTP Service**: For sending emails on behalf of users.
   - **Calendarific API**: To retrieve information about public holidays.
 
+## KPI Tracking 📊
+The project includes a KPI Tracker to monitor and analyze chatbot performance. The KPI Tracker tracks key metrics, including:
+
+- Total Interactions: The total number of interactions logged.
+- Active Users: The number of unique users interacting with the chatbot.
+- Average Satisfaction Score: The average user satisfaction score collected from feedback.
+- Average First Response Time: The average time taken for the chatbot to respond to user queries.
+- Resolution Rate: The percentage of user queries successfully resolved by the chatbot.
+
 ## Installation and Setup ⚙️
 To run the chatbot locally, follow these steps:
 
