@@ -6,7 +6,6 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import openai
 import os
 from dotenv import load_dotenv
-from todo import manage_todo_list  # Adjust this import as needed
 
 # Load environment variables
 load_dotenv()
