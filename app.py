@@ -7,7 +7,6 @@ import openai
 import os
 from dotenv import load_dotenv
 import time
-from kpi_tracker import kpi_tracker
 
 # Load environment variables
 load_dotenv()
@@ -108,12 +107,33 @@ def analyze_sentiment(news_url):
     except Exception as e:
         return f"Error in analyzing sentiment: {str(e)}"
 
+# KPI Variables
+kpi_data = {
+    'total_interactions': 0,
+    'satisfied_users': 0,
+    'dissatisfied_users': 0,
+    'resolved_queries': 0,
+    'total_queries': 0,
+}
+
+# Function to update KPIs
+def update_kpis(action):
+    kpi_data['total_interactions'] += 1
+    kpi_data['total_queries'] += 1
+
+    if action == "resolved":
+        kpi_data['resolved_queries'] += 1
+    elif action == "satisfied":
+        kpi_data['satisfied_users'] += 1
+    elif action == "dissatisfied":
+        kpi_data['dissatisfied_users'] += 1
+        
 # Streamlit sidebar navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Go to",
     ["Home", "General Queries", "Weather", "News", "To-Do List", 
-     "Recommendations", "Email", "Meetings", "Holidays", "Escalation", "Financial Planning", "Chatbot KPI's"]
+     "Recommendations", "Email", "Meetings", "Holidays", "Escalation", "Financial Planning", "Chatbot KPIs"]
 )
 
 st.title("🤖 Customer Service Chatbot - Marr Labs")
@@ -388,36 +408,33 @@ elif page == "Financial Planning":
             else:
                 st.write(sentiment)
                 
-elif page == "Chatbot KPI's":
-    st.header("Chatbot Interaction")
-    user_id = st.text_input("Enter User ID:")
-    user_input = st.text_input("Your message:")
+# Page for chatbot interactions
+elif page == "Chatbot KPIs":
+    st.header("🤖 Chatbot")
+    user_input = st.text_input("What can I help you with?")
     
     if st.button("Send"):
-        start_time = time.time()  # Start timing the response
-        kpi_tracker.log_interaction(user_id)  # Log interaction
+        # Here you would call your chatbot logic
+        chatbot_response = "This is a placeholder for the chatbot response."  # Replace with actual response logic
         
-        # Call your chatbot logic here
-        response = chatbot.get_response(user_input)  # Placeholder for your chatbot response logic
-        
-        # Log response time
-        kpi_tracker.log_response_time(start_time)
+        st.text_area("🤖 Chatbot Response", value=chatbot_response, height=200)
 
-        # Display response
-        st.write(response)
-        
-        # Example: Log satisfaction score (you could implement a feedback mechanism)
-        satisfaction_score = st.slider("Rate your satisfaction:", 1, 5)
-        kpi_tracker.log_satisfaction(satisfaction_score)
-        
-        # Example: Log resolution status (for demonstration)
-        resolved = st.checkbox("Was your issue resolved?")
-        kpi_tracker.log_resolution(resolved)
+        # Update KPIs based on the interaction
+        update_kpis("resolved")  # Assume all queries are resolved
+        # Optionally, determine user satisfaction based on response or user feedback
+        user_feedback = st.radio("Was this response helpful?", ("Yes", "No"))
+        if user_feedback == "Yes":
+            update_kpis("satisfied")
+        else:
+            update_kpis("dissatisfied")
 
-# Display KPIs
-if st.button("Show KPIs"):
-    metrics = kpi_tracker.get_metrics()
-    st.write(metrics)
+# Display KPIs on the dashboard
+st.sidebar.header("📊 Chatbot KPIs")
+st.sidebar.write(f"Total Interactions: {kpi_data['total_interactions']}")
+st.sidebar.write(f"Total Queries: {kpi_data['total_queries']}")
+st.sidebar.write(f"Resolved Queries: {kpi_data['resolved_queries']}")
+st.sidebar.write(f"Satisfied Users: {kpi_data['satisfied_users']}")
+st.sidebar.write(f"Dissatisfied Users: {kpi_data['dissatisfied_users']}")
 
 
 # Footer
