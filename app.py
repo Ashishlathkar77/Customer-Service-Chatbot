@@ -387,6 +387,7 @@ elif page == "Financial Planning":
                 st.write("Compound: ", sentiment['compound'])
             else:
                 st.write(sentiment)
+                
 elif page == "Chatbot KPI's":
     st.header("Chatbot Interaction")
     user_id = st.text_input("Enter User ID:")
