@@ -186,10 +186,18 @@ elif page == "To-Do List":
         task_to_update = None
 
     if st.button("Submit"):
+        # Ensure the action matches the expected string in lowercase
         if action == "Update Task" and task and task_to_update:
-            response = manage_todo_list(action.lower(), task, task_to_update)
+            response = manage_todo_list("update task", task, task_to_update)
+        elif action == "Add Task" and task:
+            response = manage_todo_list("add task", task)
+        elif action == "View Tasks":
+            response = manage_todo_list("view tasks")
+        elif action == "Remove Task" and task:
+            response = manage_todo_list("remove task", task)
         else:
-            response = manage_todo_list(action.lower(), task)
+            response = "Please provide the necessary inputs."
+        
         st.text_area("📋 Response", value=response, height=200)
 
 # Page for recommendations (movies, restaurants)
