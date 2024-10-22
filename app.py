@@ -6,6 +6,8 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import openai
 import os
 from dotenv import load_dotenv
+import time
+from kpi_tracker import kpi_tracker
 
 # Load environment variables
 load_dotenv()
@@ -385,6 +387,37 @@ elif page == "Financial Planning":
                 st.write("Compound: ", sentiment['compound'])
             else:
                 st.write(sentiment)
+elif page == "Chatbot KPI's":
+    st.header("Chatbot Interaction")
+    user_id = st.text_input("Enter User ID:")
+    user_input = st.text_input("Your message:")
+    
+    if st.button("Send"):
+        start_time = time.time()  # Start timing the response
+        kpi_tracker.log_interaction(user_id)  # Log interaction
+        
+        # Call your chatbot logic here
+        response = chatbot.get_response(user_input)  # Placeholder for your chatbot response logic
+        
+        # Log response time
+        kpi_tracker.log_response_time(start_time)
+
+        # Display response
+        st.write(response)
+        
+        # Example: Log satisfaction score (you could implement a feedback mechanism)
+        satisfaction_score = st.slider("Rate your satisfaction:", 1, 5)
+        kpi_tracker.log_satisfaction(satisfaction_score)
+        
+        # Example: Log resolution status (for demonstration)
+        resolved = st.checkbox("Was your issue resolved?")
+        kpi_tracker.log_resolution(resolved)
+
+# Display KPIs
+if st.button("Show KPIs"):
+    metrics = kpi_tracker.get_metrics()
+    st.write(metrics)
+
 
 # Footer
 st.sidebar.title("About")
