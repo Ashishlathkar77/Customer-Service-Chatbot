@@ -113,7 +113,7 @@ st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Go to",
     ["Home", "General Queries", "Weather", "News", "To-Do List", 
-     "Recommendations", "Email", "Meetings", "Holidays", "Escalation", "Financial Planning"]
+     "Recommendations", "Email", "Meetings", "Holidays", "Escalation", "Financial Planning", "Chatbot KPI's"]
 )
 
 st.title("🤖 Customer Service Chatbot - Marr Labs")
